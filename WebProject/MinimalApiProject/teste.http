@@ -1,0 +1,5 @@
+GET http://localhost:5052
+###
+GET http://localhost:5052/segundo
+###
+GET http://localhost:5052/retorno
