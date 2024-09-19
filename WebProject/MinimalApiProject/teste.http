@@ -9,3 +9,7 @@ POST http://localhost:5052/adicionar
 GET http://localhost:5052/produto/listar
 ###
 POST http://localhost:5052/produto/cadastrar/Pablo
+###
+POST  http://localhost:5052/produto/cadastrar1?nome=Camiset&preco=29.9&quantidade=10
+###
+POST  http://localhost:5052/produto/cadastrar/Camiseta

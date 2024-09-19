@@ -46,6 +46,33 @@ app.MapGet("/retorno", () =>
     return Results.Ok(endereco); // Retorna o endereço como resposta
 });
 
+app.MapPost("/produto/cadastrar1", (string nome, double preco, int quantidade) =>
+{
+    // Criar um novo produto
+    Produto produto = new Produto
+    {
+        Nome = nome,
+        Preco = preco,
+        Quantidade = quantidade,
+        CriadoEm = DateTime.Now
+    };
+
+    // Adicionar o produto à lista
+    listaProdutos.Add(produto);
+
+    return Results.Ok(listaProdutos); // Retorna a lista atualizada de produtos
+});
+
+app.MapPost("/produto/cadastrar", (Produto produto) =>
+{
+    produto.CriadoEm = DateTime.Now;
+
+    // Adicionar o produto à lista
+    listaProdutos.Add(produto);
+
+    return Results.Created($"/produto/{produto.Nome}", produto); // Retorna 201 Created e o produto criado
+});
+
 // Endpoint para receber dados pela URL da requisição
 // app.MapGet("/dados/{nome}/{idade}", (string nome, string idade) =>
 // {
