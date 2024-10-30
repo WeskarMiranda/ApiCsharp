@@ -1,31 +1,45 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function ConsultarCep(){
+interface CepData {
+    cep: string;
+    logradouro: string;
+    bairro: string;
+    localidade: string;
+    uf: string;
+}
+
+function ConsultarCep() {
+    // Tipamos o estado para que seja do tipo CepData ou null
+    const [cepData, setCepData] = useState<CepData | null>(null);
 
     useEffect(() => {
-        // Metodo do utilizado para executar enquanto o componente esta sendo aberto ou renderizado
         fetch("https://viacep.com.br/ws/01001000/json/")
-        .then(resposta => {
-            return resposta.json();
-        })
-        .then(cep => {
-            console.log(cep);
-        })
-    });
+            .then((resposta) => resposta.json())
+            .then((data: CepData) => setCepData(data)) // Usamos o tipo CepData
+            .catch((error) => console.error("Erro ao buscar o CEP:", error));
+    }, []); // Executa apenas uma vez após a montagem do componente
 
-    return(
+    return (
         <div>
-            <h1>ConsultarCep</h1>
-            
+            <h1>Consultar CEP</h1>
+            {cepData ? ( // Exibe os dados se o estado não for null
+                <div>
+                    <p><strong>CEP:</strong> {cepData.cep}</p>
+                    <p><strong>Logradouro:</strong> {cepData.logradouro}</p>
+                    <p><strong>Bairro:</strong> {cepData.bairro}</p>
+                    <p><strong>Cidade:</strong> {cepData.localidade}</p>
+                    <p><strong>Estado:</strong> {cepData.uf}</p>
+                </div>
+            ) : (
+                <p>Carregando...</p>
+            )}
         </div>
-        
     );
-
 }
 
 export default ConsultarCep;
 
-// Exeercicios
+// Exercicios
 // exibir os dados do cep no html
 // realizar a requisição para a sua api
 // resolver o problema de cors na api

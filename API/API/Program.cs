@@ -8,8 +8,23 @@ using API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Adiciona o serviço de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirTudo", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")  // Permitir apenas esta origem
+              .AllowAnyMethod() // Permitir qualquer método HTTP (GET, POST, etc.)
+              .AllowAnyHeader(); // Permitir qualquer cabeçalho
+    });
+});
+
 builder.Services.AddDbContext<AppDataContext>();
 var app = builder.Build();
+
+// Aplica a política de CORS
+app.UseCors("PermitirTudo");
 
 //Lista de produtos
 List<Produto> produtos =
