@@ -3,11 +3,9 @@ import ConsultarProdutos from './ConsultarProdutos';
 
 function App() {
   return (
-    <div>
       < ConsultarProdutos/>
      
   
-    </div>
   );
 }
 
